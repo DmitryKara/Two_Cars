@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    public GameObject prefab;
+    public GameObject[] prefab;
     public int poolSize = 4;
     private Queue<GameObject> pool;
 
@@ -12,7 +12,7 @@ public class ObjectPool : MonoBehaviour
         pool = new Queue<GameObject>();
         for (int i = 0; i < poolSize; i++)
         {
-            GameObject obj = Instantiate(prefab);
+            GameObject obj = Instantiate(prefab[Random.Range(0, prefab.Length)]);
             obj.SetActive(false);
             pool.Enqueue(obj);
         }
@@ -28,7 +28,7 @@ public class ObjectPool : MonoBehaviour
         }
         else
         {
-            GameObject obj = Instantiate(prefab);
+            GameObject obj = Instantiate(prefab[Random.Range(0, prefab.Length)]);
             return obj;
         }
     }
