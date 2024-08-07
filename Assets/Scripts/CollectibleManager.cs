@@ -8,6 +8,8 @@ public class CollectibleManager : MonoBehaviour
     private int collectedItemCount = 0;
     public TMP_Text collectedItemsText;
 
+    public Countdown countdown;
+
     private void Awake()
     {
         if (Instance == null)
@@ -23,11 +25,23 @@ public class CollectibleManager : MonoBehaviour
     private void Start()
     {
         UpdateCollectedItemsText();
+        countdown.StartCountdown();
     }
 
     public void AddCollectedItem()
     {
         collectedItemCount++;
+        UpdateCollectedItemsText();
+    }
+
+    public int GetCollectedItemCount()
+    {
+        return collectedItemCount;
+    }
+
+    public void ResetCollectedItemCount()
+    {
+        collectedItemCount = 0;
         UpdateCollectedItemsText();
     }
 

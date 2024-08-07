@@ -9,27 +9,31 @@ public class CarController : MonoBehaviour
     public float laneChangeDuration = 0.3f;
     public float turnAngle = 45f;
 
-    public void Awake()
+    private Vector3 initialPosition;
+    private Coroutine laneChangeCoroutine;
+
+    private void Awake()
     {
         screenWidth = Camera.main.orthographicSize * Camera.main.aspect * 2f;
     }
 
-    void Start()
+    private void Start()
     {
+        initialPosition = transform.position;
         SetInitialPosition();
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(changeLaneKey) && !IsChangingLane)
         {
-            StartCoroutine(ChangeLane());
+            laneChangeCoroutine = StartCoroutine(ChangeLane());
         }
     }
 
-    bool IsChangingLane { get; set; } = false;
+    private bool IsChangingLane { get; set; } = false;
 
-    IEnumerator ChangeLane()
+    private IEnumerator ChangeLane()
     {
         if (IsMoveAllowed())
         {
@@ -68,12 +72,25 @@ public class CarController : MonoBehaviour
             IsChangingLane = false;
         }
     }
-    bool IsMoveAllowed()
+
+    private bool IsMoveAllowed()
     {
         return true;
     }
 
-    void UpdatePosition()
+    private void SetInitialPosition()
+    {
+        float[] initialLanes = (initialPosition.x < 0) ? GetLeftCarLanes() : GetRightCarLanes();
+        currentLane = (initialPosition.x < 0) ? 1 : 0;
+        Vector3 newPosition = initialPosition;
+        newPosition.x = initialLanes[currentLane];
+        transform.position = newPosition;
+        transform.rotation = Quaternion.identity;
+
+        UpdatePosition();
+    }
+
+    private void UpdatePosition()
     {
         float[] currentLanes = (transform.position.x < 0) ? GetLeftCarLanes() : GetRightCarLanes();
         Vector3 newPosition = transform.position;
@@ -81,28 +98,26 @@ public class CarController : MonoBehaviour
         transform.position = newPosition;
     }
 
-    void SetInitialPosition()
+    public void ResetCar()
     {
-        if (transform.position.x < 0)
+        if (laneChangeCoroutine != null)
         {
-            currentLane = 1;
-        }
-        else
-        {
-            currentLane = 0;
+            StopCoroutine(laneChangeCoroutine);
         }
 
+        IsChangingLane = false;
+        SetInitialPosition();
         UpdatePosition();
     }
 
-    float[] GetLeftCarLanes()
+    private float[] GetLeftCarLanes()
     {
         float laneWidth = screenWidth / 4f;
         float leftLaneCenter = -screenWidth / 4f;
         return new float[] { leftLaneCenter - laneWidth / 2f, leftLaneCenter + laneWidth / 2f };
     }
 
-    float[] GetRightCarLanes()
+    private float[] GetRightCarLanes()
     {
         float laneWidth = screenWidth / 4f;
         float rightLaneCenter = screenWidth / 4f;

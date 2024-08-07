@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AvoidObstacle : ObstacleMovement
@@ -8,7 +6,7 @@ public class AvoidObstacle : ObstacleMovement
     {
         if (other.CompareTag("Car"))
         {
-            Debug.Log("Collision with Car! GAME OVER!!");
+            GameOverManager.Instance.EndGame();
             ReturnToPool();
         }
     }

@@ -5,7 +5,7 @@ public class ObstacleMovement : MonoBehaviour
     public float speed;
     public ObjectPool pool;
 
-    void Update()
+    protected void Update()
     {
         Move();
         CheckOutOfBounds();
@@ -39,5 +39,10 @@ public class ObstacleMovement : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         HandleCollision(other);
+    }
+
+    public void ResetToObstacle()
+    {
+        ReturnToPool();
     }
 }
