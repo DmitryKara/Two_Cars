@@ -9,6 +9,7 @@ public class CollectibleManager : MonoBehaviour
     public TMP_Text collectedItemsText;
 
     public Countdown countdown;
+    public ObstacleSpawner[] spawners;
 
     private void Awake()
     {
@@ -32,6 +33,7 @@ public class CollectibleManager : MonoBehaviour
     {
         collectedItemCount++;
         UpdateCollectedItemsText();
+        UpdateSpawnerChances();
     }
 
     public int GetCollectedItemCount()
@@ -48,5 +50,21 @@ public class CollectibleManager : MonoBehaviour
     private void UpdateCollectedItemsText()
     {
         collectedItemsText.text = "Score: " + collectedItemCount;
+    }
+  
+        private void UpdateSpawnerChances()
+    {
+        foreach (var spawner in spawners)
+        {
+            spawner.UpdateAvoidObstacleChance(collectedItemCount);
+        }
+    }
+
+    public void ResetSpawnerChances()
+    {
+        foreach (var spawner in spawners)
+        {
+            spawner.ResetObstacleChance();
+        }
     }
 }

@@ -23,9 +23,9 @@ public class CarController : MonoBehaviour
         SetInitialPosition();
     }
 
-    private void Update()
+    public void StartLaneChange()
     {
-        if (Input.GetKeyDown(changeLaneKey) && !IsChangingLane)
+        if (!IsChangingLane)
         {
             laneChangeCoroutine = StartCoroutine(ChangeLane());
         }

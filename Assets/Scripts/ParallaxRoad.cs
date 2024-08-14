@@ -9,8 +9,10 @@ public class ParallaxRoad : MonoBehaviour
 
     void Start()
     {
-        partHeight = roadParts[0].GetComponent<SpriteRenderer>().bounds.size.y;
         mainCamera = Camera.main;
+        AdjustRoadSize();
+
+        partHeight = roadParts[0].GetComponent<SpriteRenderer>().bounds.size.y;
 
         SortRoadParts();
     }
@@ -19,6 +21,20 @@ public class ParallaxRoad : MonoBehaviour
     {
         MoveRoad();
         CheckAndRepositionRoad();
+    }
+
+    void AdjustRoadSize()
+    {
+        float screenWidth = mainCamera.orthographicSize * 2f * mainCamera.aspect;
+
+        foreach (GameObject roadPart in roadParts)
+        {
+            SpriteRenderer sr = roadPart.GetComponent<SpriteRenderer>();
+            float roadWidth = sr.bounds.size.x;
+            float scaleX = screenWidth / roadWidth;
+
+            roadPart.transform.localScale = new Vector3(scaleX, roadPart.transform.localScale.y, roadPart.transform.localScale.z);
+        }
     }
 
     void MoveRoad()

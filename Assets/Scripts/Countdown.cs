@@ -7,7 +7,7 @@ public class Countdown : MonoBehaviour
 
     public TMP_Text countdownText;
     public int countdownTime = 3;
-    public bool isCountdownActive = false;
+    public static bool isCountdownActive { get; private set; } = false;
 
     public void StartCountdown()
     {
@@ -15,7 +15,6 @@ public class Countdown : MonoBehaviour
 
         if (countdownText != null)
         {
-            //countdownText.gameObject.SetActive(true);
             StartCoroutine(CountdownRoutine());
         }
     }

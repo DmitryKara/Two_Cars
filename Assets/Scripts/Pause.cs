@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,15 +10,32 @@ public class Pause : MonoBehaviour
     public Button pauseButton;
     public Countdown countdown;
     public TMP_Text resultText;
+    public Sprite pause;
+    public Sprite play;
+
+    private Image pauseButtonImage;
+
+    public bool IsPaused
+    {
+        get
+        {
+            return isPaused;
+        }
+    }
 
     private void Start()
     {
+        if (pauseButton != null)
+        {
+            pauseButtonImage = pauseButton.GetComponent<Image>();
+        }
+
         isPaused = false;
     }
 
     public void TogglePause()
     {
-        if (countdown != null && countdown.isCountdownActive)
+        if (countdown != null && Countdown.isCountdownActive)
         {
             return;
         }
@@ -41,6 +56,11 @@ public class Pause : MonoBehaviour
         isPaused = true;
         resultText.text = "YOUR RESULT: " + CollectibleManager.Instance.GetCollectedItemCount();
         gameOverPanel.SetActive(true);
+
+        if (pauseButtonImage != null)
+        {
+            pauseButtonImage.sprite = play;
+        }
     }
 
     private void ResumeGame()
@@ -48,6 +68,11 @@ public class Pause : MonoBehaviour
         Time.timeScale = 1f;
         isPaused = false;
         gameOverPanel.SetActive(false);
+
+        if (pauseButtonImage != null)
+        {
+            pauseButtonImage.sprite = pause;
+        }
     }
 
     public void DisablePauseButton()

@@ -257,12 +257,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1024769200, guid: b88380919b7904045af68f60fa458847, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d4a9db26a0e82544c9b678bb323a8d7b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 4.77, y: 5.05}
+  m_Size: {x: 4.79, y: 4.9}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -277,8 +277,8 @@ Transform:
   m_GameObject: {fileID: 194891611}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.02, y: 8.52, z: 0.048543815}
-  m_LocalScale: {x: 1.15, y: 1.2, z: 1}
+  m_LocalPosition: {x: 0, y: 8.4, z: 0.048543815}
+  m_LocalScale: {x: 1, y: 1.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 353279161}
@@ -312,10 +312,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 226611a2b13d08d4899f1a21f5bc3029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab:
+  obstaclePrefabs:
   - {fileID: 8201398119561936534, guid: a5050b38d9a7b4c4baaa3a1362c4212e, type: 3}
   - {fileID: 926933848775741263, guid: 513163dda00922c41b56b3cdcb5637ad, type: 3}
-  poolSize: 4
+  initialPoolSize: 10
 --- !u!4 &318097930
 Transform:
   m_ObjectHideFlags: 0
@@ -362,8 +362,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roadParts:
   - {fileID: 1594771580}
-  - {fileID: 194891611}
   - {fileID: 671310242}
+  - {fileID: 194891611}
   speed: 5
 --- !u!4 &353279161
 Transform:
@@ -374,7 +374,7 @@ Transform:
   m_GameObject: {fileID: 353279159}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.018509, y: 0.48542064, z: -0.048543815}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -725,9 +725,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverPanel: {fileID: 368983106}
-  pauseButtonObject: {fileID: 961514105}
+  pauseButton: {fileID: 961514107}
   countdown: {fileID: 3472890134080641653}
   resultText: {fileID: 1304736361}
+  pause: {fileID: 21300000, guid: 1b7b4ac206c7d3447a6ce9088e19ee72, type: 3}
+  play: {fileID: 21300000, guid: 6e9464a0c9a619540be3b8be0f23b797, type: 3}
 --- !u!1 &513504971
 GameObject:
   m_ObjectHideFlags: 0
@@ -780,6 +782,9 @@ MonoBehaviour:
   minSpawnInterval: 0.7
   maxSpawnInterval: 1.5
   isLeftSpawner: 1
+  minAvoidObstacleChance: 0
+  maxAvoidObstacleChance: 0.8
+  pointsToMaxChance: 100
 --- !u!1 &671310242
 GameObject:
   m_ObjectHideFlags: 0
@@ -838,12 +843,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1024769200, guid: b88380919b7904045af68f60fa458847, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d4a9db26a0e82544c9b678bb323a8d7b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 4.77, y: 5.05}
+  m_Size: {x: 4.79, y: 4.9}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -858,8 +863,8 @@ Transform:
   m_GameObject: {fileID: 671310242}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.02, y: 2.46, z: 0.048543815}
-  m_LocalScale: {x: 1.15, y: 1.2, z: 1}
+  m_LocalPosition: {x: 0, y: 2.6, z: 0.048543815}
+  m_LocalScale: {x: 1, y: 1.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 353279161}
@@ -1285,7 +1290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.764151, g: 0.17661981, b: 0.17661981, a: 1}
+  m_Color: {r: 0.7686275, g: 0.7686275, b: 0.7686275, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1838,12 +1843,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1024769200, guid: b88380919b7904045af68f60fa458847, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d4a9db26a0e82544c9b678bb323a8d7b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 4.77, y: 5.05}
+  m_Size: {x: 4.79, y: 4.9}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1858,8 +1863,8 @@ Transform:
   m_GameObject: {fileID: 1594771580}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.02, y: -3.6, z: 0.048543815}
-  m_LocalScale: {x: 1.15, y: 1.2, z: 1}
+  m_LocalPosition: {x: 0, y: -3.1, z: 0.048543815}
+  m_LocalScale: {x: 1, y: 1.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 353279161}
@@ -2032,6 +2037,53 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1 &1814063422
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1814063424}
+  - component: {fileID: 1814063423}
+  m_Layer: 0
+  m_Name: Touch
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1814063423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814063422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3eb319a37ac8d9418161d2b7a291efb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftCarController: {fileID: 1627450081}
+  rightCarController: {fileID: 912118506}
+  pauseManager: {fileID: 497853762}
+--- !u!4 &1814063424
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814063422}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 488.41748, y: 924.2785, z: -4.2460365}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1862127168
 GameObject:
   m_ObjectHideFlags: 0
@@ -2084,6 +2136,9 @@ MonoBehaviour:
   minSpawnInterval: 0.7
   maxSpawnInterval: 1.5
   isLeftSpawner: 0
+  minAvoidObstacleChance: 0
+  maxAvoidObstacleChance: 0.8
+  pointsToMaxChance: 100
 --- !u!1 &1964561226
 GameObject:
   m_ObjectHideFlags: 0
@@ -2374,6 +2429,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collectedItemsText: {fileID: 1320627729}
   countdown: {fileID: 3472890134080641653}
+  spawners:
+  - {fileID: 513504973}
+  - {fileID: 1862127170}
 --- !u!114 &1859826145928891004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2477,7 +2535,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   countdownText: {fileID: 1859826145928891004}
   countdownTime: 3
-  isCountdownActive: 0
 --- !u!1 &4446338394963708748
 GameObject:
   m_ObjectHideFlags: 0
@@ -2574,3 +2631,4 @@ SceneRoots:
   - {fileID: 1964561230}
   - {fileID: 1489947309}
   - {fileID: 86318913}
+  - {fileID: 1814063424}

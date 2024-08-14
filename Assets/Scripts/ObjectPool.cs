@@ -1,41 +1,60 @@
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class ObjectPool : MonoBehaviour
 {
-    public GameObject[] prefab;
-    public int poolSize = 4;
-    private Queue<GameObject> pool;
+    public GameObject[] obstaclePrefabs;
+    public int initialPoolSize = 10;
 
-    void Start()
+    private List<GameObject> poolObjects;
+
+    private void Awake()
     {
-        pool = new Queue<GameObject>();
-        for (int i = 0; i < poolSize; i++)
+        poolObjects = new List<GameObject>();
+
+        for (int i = 0; i < initialPoolSize; i++)
         {
-            GameObject obj = Instantiate(prefab[Random.Range(0, prefab.Length)]);
-            obj.SetActive(false);
-            pool.Enqueue(obj);
+            foreach (GameObject prefab in obstaclePrefabs)
+            {
+                GameObject obj = Instantiate(prefab);
+                obj.SetActive(false);
+                poolObjects.Add(obj);
+            }
         }
     }
 
-    public GameObject GetObject()
+    public GameObject GetObject(bool isAvoidObstacle)
     {
-        if (pool.Count > 0)
+        foreach (GameObject obj in poolObjects)
         {
-            GameObject obj = pool.Dequeue();
-            obj.SetActive(true);
-            return obj;
+            if (!obj.activeInHierarchy)
+            {
+                if ((isAvoidObstacle && obj.GetComponent<AvoidObstacle>() != null) ||
+                    (!isAvoidObstacle && obj.GetComponent<CollectibleObstacle>() != null))
+                {
+                    obj.SetActive(true);
+                    return obj;
+                }
+            }
         }
-        else
+
+        foreach (GameObject prefab in obstaclePrefabs)
         {
-            GameObject obj = Instantiate(prefab[Random.Range(0, prefab.Length)]);
-            return obj;
+            if ((isAvoidObstacle && prefab.GetComponent<AvoidObstacle>() != null) ||
+                (!isAvoidObstacle && prefab.GetComponent<CollectibleObstacle>() != null))
+            {
+                GameObject newObj = Instantiate(prefab);
+                newObj.SetActive(true);
+                poolObjects.Add(newObj);
+                return newObj;
+            }
         }
+
+        return null;
     }
 
     public void ReturnObject(GameObject obj)
     {
         obj.SetActive(false);
-        pool.Enqueue(obj);
     }
 }

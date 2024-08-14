@@ -1,6 +1,5 @@
-using UnityEngine;
 using TMPro;
-using UnityEditor.Build;
+using UnityEngine;
 
 public class GameOverManager : MonoBehaviour
 {
@@ -65,5 +64,7 @@ public class GameOverManager : MonoBehaviour
         {
             pauseScript.DisablePauseButton();
         }
+
+        CollectibleManager.Instance.ResetSpawnerChances();
     }
 }
