@@ -6,6 +6,9 @@ public class AvoidObstacle : ObstacleMovement
     {
         if (other.CompareTag("Car"))
         {
+            AudioManager.Instance.StopMusic();
+            AudioManager.Instance.PlayCollisionSound();
+
             GameOverManager.Instance.EndGame();
             ReturnToPool();
         }

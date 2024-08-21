@@ -21,6 +21,10 @@ public class Pause : MonoBehaviour
         {
             return isPaused;
         }
+        set 
+        {
+            isPaused = value;
+        }
     }
 
     private void Start()
@@ -57,6 +61,9 @@ public class Pause : MonoBehaviour
         resultText.text = "YOUR RESULT: " + CollectibleManager.Instance.GetCollectedItemCount();
         gameOverPanel.SetActive(true);
 
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.PlayMenuMusic();
+
         if (pauseButtonImage != null)
         {
             pauseButtonImage.sprite = play;
@@ -66,10 +73,19 @@ public class Pause : MonoBehaviour
     private void ResumeGame()
     {
         Time.timeScale = 1f;
-        isPaused = false;
         gameOverPanel.SetActive(false);
 
-        if (pauseButtonImage != null)
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.PlayRaceMusic();
+
+        RestartDuringPause();
+    }
+
+    public void RestartDuringPause()
+    {
+        isPaused = false;
+
+        if(pauseButtonImage != null)
         {
             pauseButtonImage.sprite = pause;
         }

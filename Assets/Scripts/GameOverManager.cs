@@ -8,6 +8,9 @@ public class GameOverManager : MonoBehaviour
     public TMP_Text resultText;
     public Countdown countdown;
 
+    public HighScoreManager highScoreManager;
+    private int score;
+
     public Pause pauseScript;
 
     private void Awake()
@@ -52,13 +55,18 @@ public class GameOverManager : MonoBehaviour
             countdown.StartCountdown();
         }
 
+        pauseScript.RestartDuringPause();
         pauseScript.EnablePauseButton();
     }
+
     public void EndGame()
     {
         Time.timeScale = 0f;
         gameOverPanel.SetActive(true);
-        resultText.text = "YOUR RESULT: " + CollectibleManager.Instance.GetCollectedItemCount();
+        score = CollectibleManager.Instance.GetCollectedItemCount();
+        resultText.text = resultText.text + ": " + score;
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.PlayMenuMusic();
 
         if (pauseScript != null)
         {
@@ -66,5 +74,14 @@ public class GameOverManager : MonoBehaviour
         }
 
         CollectibleManager.Instance.ResetSpawnerChances();
+
+        if (HighScoreManager.Instance != null)
+        {
+            HighScoreManager.Instance.AddScore(score);
+        }
+        else
+        {
+            Debug.LogError("HighScoreManager не найден!");
+        }
     }
 }

@@ -15,6 +15,8 @@ public class Countdown : MonoBehaviour
 
         if (countdownText != null)
         {
+            AudioManager.Instance.StopMusic();
+            AudioManager.Instance.PlayCountdownMusic();
             StartCoroutine(CountdownRoutine());
         }
     }
@@ -26,13 +28,15 @@ public class Countdown : MonoBehaviour
         countdownText.gameObject.SetActive(true);
 
         for (int i = countdownTime; i > 0; i--)
-        {
+        {                   
             countdownText.text = i.ToString();
             yield return new WaitForSecondsRealtime(1f);
         }
 
         countdownText.text = "Start!";
         yield return new WaitForSecondsRealtime(1f);
+
+        AudioManager.Instance.PlayRaceMusic();
 
         countdownText.gameObject.SetActive(false);
         Time.timeScale = 1f;

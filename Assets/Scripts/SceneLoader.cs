@@ -5,19 +5,21 @@ using UnityEngine.UI;
 
 public class SceneLoader : MonoBehaviour
 {
-    public string sceneToLoad;
     public Slider progressBar;
 
     void Start()
     {
-        StartCoroutine(LoadSceneAsync());
+        string sceneToLoad = PlayerPrefs.GetString("SceneToLoad", "");
 
-        GameOverManager.Instance?.RestartGame();
+        if (!string.IsNullOrEmpty(sceneToLoad))
+        {
+            StartCoroutine(LoadSceneAsync(sceneToLoad));
+        }
     }
 
-    IEnumerator LoadSceneAsync()
+    IEnumerator LoadSceneAsync(string sceneName)
     {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneToLoad);
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
 
         while (!operation.isDone)
         {
@@ -29,5 +31,11 @@ public class SceneLoader : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    public static void LoadSceneWithTransition(string sceneName)
+    {
+        PlayerPrefs.SetString("SceneToLoad", sceneName);
+        SceneManager.LoadScene("LoadingScene");
     }
 }
