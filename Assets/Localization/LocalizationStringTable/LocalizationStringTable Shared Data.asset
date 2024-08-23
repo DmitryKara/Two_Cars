@@ -35,6 +35,10 @@ MonoBehaviour:
     m_Key: RuLanguage
     m_Metadata:
       m_Items: []
+  - m_Id: 1502431196901376
+    m_Key: Start
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

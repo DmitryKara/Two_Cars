@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,9 +11,11 @@ public class AudioManager : MonoBehaviour
     public AudioClip raceMusic;
     public AudioClip collisionSound;
     public AudioClip buttonClickSound;
+    public AudioClip collection;
 
     private AudioSource musicSource;
     private AudioSource sfxSource;
+    private bool isSoundOn;
 
     void Awake()
     {
@@ -27,6 +28,9 @@ public class AudioManager : MonoBehaviour
             sfxSource = gameObject.AddComponent<AudioSource>();
 
             musicSource.loop = true;
+
+            LoadAudioSettings();
+            ApplyAudioSettings();
         }
         else
         {
@@ -34,12 +38,31 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private void OnOffSound()
+    public void SaveAudioSettings()
     {
-        if (MuteButton.Instance != null)
+        PlayerPrefs.SetInt("SoundOn", isSoundOn ? 1 : 0);
+        PlayerPrefs.Save();
+    }
+
+    public void LoadAudioSettings()
+    {
+        isSoundOn = PlayerPrefs.GetInt("SoundOn", 1) == 1;
+    }
+
+    public void ApplyAudioSettings()
+    {
+        AudioListener.volume = isSoundOn ? 1 : 0;
+        if (musicSource.isPlaying)
         {
-            MuteButton.Instance.OnOffSound();
+            musicSource.volume = isSoundOn ? 1 : 0;
         }
+    }
+
+    public void ToggleSound()
+    {
+        isSoundOn = !isSoundOn;
+        ApplyAudioSettings();
+        SaveAudioSettings();
     }
 
     public void PlayMusic(AudioClip clip)
@@ -98,5 +121,10 @@ public class AudioManager : MonoBehaviour
     public void PlayButtonClickSound()
     {
         PlaySFX(buttonClickSound);
+    }
+
+    public void PlayCollections()
+    {
+        PlaySFX(collection);
     }
 }

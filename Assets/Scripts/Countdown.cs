@@ -9,6 +9,8 @@ public class Countdown : MonoBehaviour
     public int countdownTime = 3;
     public static bool isCountdownActive { get; private set; } = false;
 
+    private string start;
+
     public void StartCountdown()
     {
         isCountdownActive = true;
@@ -26,14 +28,15 @@ public class Countdown : MonoBehaviour
         Time.timeScale = 0f;
 
         countdownText.gameObject.SetActive(true);
+        start = countdownText.text;
 
         for (int i = countdownTime; i > 0; i--)
-        {                   
+        {
             countdownText.text = i.ToString();
             yield return new WaitForSecondsRealtime(1f);
         }
 
-        countdownText.text = "Start!";
+        countdownText.text = start;
         yield return new WaitForSecondsRealtime(1f);
 
         AudioManager.Instance.PlayRaceMusic();

@@ -58,13 +58,17 @@ public class GameOverManager : MonoBehaviour
         pauseScript.RestartDuringPause();
         pauseScript.EnablePauseButton();
     }
+    public void ResultText()
+    {
+        resultText.text = resultText.text + ": " + score;
+    }
 
     public void EndGame()
     {
         Time.timeScale = 0f;
         gameOverPanel.SetActive(true);
         score = CollectibleManager.Instance.GetCollectedItemCount();
-        resultText.text = resultText.text + ": " + score;
+        ResultText();
         AudioManager.Instance.StopMusic();
         AudioManager.Instance.PlayMenuMusic();
 

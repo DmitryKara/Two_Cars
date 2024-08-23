@@ -6,6 +6,7 @@ public class CollectibleObstacle : ObstacleMovement
     {
         if (other.CompareTag("Car"))
         {
+            AudioManager.Instance.PlayCollections();
             CollectibleManager.Instance.AddCollectedItem();
             ReturnToPool();
         }

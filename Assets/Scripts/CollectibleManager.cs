@@ -11,6 +11,8 @@ public class CollectibleManager : MonoBehaviour
     public Countdown countdown;
     public ObstacleSpawner[] spawners;
 
+    private string scoreString;
+
     private void Awake()
     {
         if (Instance == null)
@@ -25,6 +27,7 @@ public class CollectibleManager : MonoBehaviour
 
     private void Start()
     {
+        scoreString = collectedItemsText.text;
         UpdateCollectedItemsText();
         countdown.StartCountdown();
     }
@@ -49,7 +52,7 @@ public class CollectibleManager : MonoBehaviour
 
     private void UpdateCollectedItemsText()
     {
-        collectedItemsText.text = "Score: " + collectedItemCount;
+        collectedItemsText.text = scoreString + ": " + collectedItemCount;
     }
   
         private void UpdateSpawnerChances()

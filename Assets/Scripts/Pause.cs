@@ -9,11 +9,11 @@ public class Pause : MonoBehaviour
     public GameObject gameOverPanel;
     public Button pauseButton;
     public Countdown countdown;
-    public TMP_Text resultText;
     public Sprite pause;
     public Sprite play;
 
     private Image pauseButtonImage;
+    private string result;
 
     public bool IsPaused
     {
@@ -35,6 +35,7 @@ public class Pause : MonoBehaviour
         }
 
         isPaused = false;
+        result = GameOverManager.Instance.resultText.text;
     }
 
     public void TogglePause()
@@ -58,7 +59,7 @@ public class Pause : MonoBehaviour
     {
         Time.timeScale = 0f;
         isPaused = true;
-        resultText.text = "YOUR RESULT: " + CollectibleManager.Instance.GetCollectedItemCount();
+        GameOverManager.Instance.resultText.text = result + ": " + CollectibleManager.Instance.GetCollectedItemCount();
         gameOverPanel.SetActive(true);
 
         AudioManager.Instance.StopMusic();
@@ -74,7 +75,7 @@ public class Pause : MonoBehaviour
     {
         Time.timeScale = 1f;
         gameOverPanel.SetActive(false);
-
+        GameOverManager.Instance.resultText.text = result;
         AudioManager.Instance.StopMusic();
         AudioManager.Instance.PlayRaceMusic();
 

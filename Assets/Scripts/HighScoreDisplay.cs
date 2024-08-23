@@ -22,7 +22,7 @@ public class HighScoreDisplay : MonoBehaviour
 
         foreach (HighScore score in HighScoreManager.Instance.highScores)
         {
-            highScoreText.text += $"{score.Date} {' ',4} {score.Time} {' ',4} {score.Score}\n\n";
+            highScoreText.text += $"{score.Date} {' ',3} {score.Time} {' ',3} {score.Score}\n\n";
         }
     }
 }

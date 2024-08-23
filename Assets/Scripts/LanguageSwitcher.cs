@@ -9,7 +9,7 @@ public class LanguageSwitcher : MonoBehaviour
 
     void Start()
     {
-        LoadLanguage();
+        UpdateToggles();
     }
 
     void Update()
@@ -80,12 +80,5 @@ public class LanguageSwitcher : MonoBehaviour
     {
         PlayerPrefs.SetString("selectedLanguage", localeCode);
         PlayerPrefs.Save();
-    }
-
-    void LoadLanguage()
-    {
-        string savedLanguage = PlayerPrefs.GetString("selectedLanguage", "en");
-        SetLanguage(savedLanguage);
-        UpdateToggles();
     }
 }
